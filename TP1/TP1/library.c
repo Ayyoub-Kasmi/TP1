@@ -71,7 +71,7 @@ void createMatrix(Line** head, int m, int n){
 
 
 //Task 2:
-//to be completed: empty line and zeros at the end of the line
+//to be completed: empty line (verify the validity of printNllLine) and zeros at the end of the line
 void printNullLine(int number, int columns){ //Used to print the NULL lines
         for(int j=1; j<columns; j++){
             printf("0 ");
@@ -88,6 +88,7 @@ void printZeros(int number){
 void showMatrix(Line* matrix, int columns){
     Node2 *cell;
     int difference; //to calculate difference between two lines or columns
+    printf("\n"); //Auxiliary line jump
     while(matrix!=NULL){
         cell=matrix->first; //Head of the line
 
@@ -122,7 +123,7 @@ Line* extractMatrix(Line* matrix, int L1, int C1, int L2, int C2){
         P1=P1->next; //advancing in lines until finding the line L1
     }
 
-    while(P1->number < L2){
+    while(P1->number <= L2){ //from L1 to L2
         P2=(Line* )malloc(sizeof(Line));
         P2->number=i; //updating the line number of newMatrix
         P2->first=NULL;
@@ -130,10 +131,13 @@ Line* extractMatrix(Line* matrix, int L1, int C1, int L2, int C2){
         tmp1=P2;
 
         Q1=P1->first;
-        while(Q1->col < C1){    //For each line
+        while(Q1->col < C1){    //Finding the starting cell for each line
             Q1=Q1->next; //advancing in columns until finding the column C1
+        }
+
+        while(Q1->col <= C2){ //from C1 to C2
             Q2=(Node2* )malloc(sizeof(Node2));
-            printf("Here is the value of Q1: %d", Q1->val);
+            Q2->val=Q1->val;
             Q2->col=j;
 
             if(P2->first==NULL){
@@ -145,13 +149,18 @@ Line* extractMatrix(Line* matrix, int L1, int C1, int L2, int C2){
             }
             j++;
             Q1=Q1->next;
+            if(Q1==NULL){
+                break;
+            }
         }
 
-        printf("Here is the value of Q2: %d", Q2->val);
         Q2->next=NULL; //Here!
 
         i++;
         P1=P1->next;
+        if(P1==NULL){
+            break;
+        }
     }
     P2->next=NULL;
     tmp1=newMatrix;

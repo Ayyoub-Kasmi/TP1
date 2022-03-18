@@ -24,6 +24,7 @@ int main()
     scanf("%d %d", &L2, &C2);
 
     matrix2=extractMatrix(matrix1, L1, C1, L2, C2);
-    showMatrix(matrix1, C2-C1+1);
+    showMatrix(matrix2, C2-C1+1);
+
     return 0;
 }
