@@ -27,4 +27,5 @@ typedef struct Line{
 void createMatrix(Line** head, int m, int n);
 void showMatrix(Line* matrix, int columns);
 Line* extractMatrix(Line* matrix, int L1, int C1, int L2, int C2);
+void sumMatrix(Line* matrix1, Line* matrix2);
 #endif // LIBRARY_H_INCLUDED

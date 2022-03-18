@@ -168,3 +168,36 @@ Line* extractMatrix(Line* matrix, int L1, int C1, int L2, int C2){
     free(tmp2);
     return newMatrix;
 }
+
+//Task 4:
+//Waiting for an answer from the teacher for more clarity
+//divideMatrix
+
+//Task 5:
+//Do I have to keep the original matrices or use matrix1 as a destination?
+//I will use matrix1 as a destination at the moment
+
+void sumMatrix(Line* matrix1, Line* matrix2){
+    Line *P1, *P2;
+    Node2 *Q1, *Q2;
+
+    P1=matrix1;
+    P2=matrix2;
+
+    while(P1!=NULL){
+        Q1=P1->first;
+        Q2=P2->first;
+
+        while(Q1!=NULL){
+            Q1->val+=Q2->val;
+            //for the case of zero, here, if I find the sum is zero then this node must be removed!
+
+            Q1=Q1->next;
+            Q2=Q2->next;
+        }
+
+        P1=P1->next;
+        P2=P2->next;
+    }
+}
+

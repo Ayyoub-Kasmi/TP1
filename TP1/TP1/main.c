@@ -13,9 +13,12 @@ int main()
 
     //Task1
     createMatrix(&matrix1, m, n);
-    showMatrix(matrix1, n);
 
     //Task2
+    showMatrix(matrix1, n);
+
+    //Task3
+    /*
     int L1, C1, L2, C2; //the indexes of the starting and ending cells
 
     printf("Enter the coordinates of the starting cell (line, column): ");
@@ -24,7 +27,12 @@ int main()
     scanf("%d %d", &L2, &C2);
 
     matrix2=extractMatrix(matrix1, L1, C1, L2, C2);
-    showMatrix(matrix2, C2-C1+1);
+    showMatrix(matrix2, C2-C1+1);   */
 
+    //Task4
+    printf("\n\nThis is matrix2\n\n");
+    createMatrix(&matrix2, m, n);
+    sumMatrix(matrix1, matrix2);
+    showMatrix(matrix1, n);
     return 0;
 }
