@@ -2,20 +2,23 @@
 #include <stdlib.h>
 #include "library.h"
 
+int m1, n1, m2, n2; //sizes of the m*n matrices (in this TP we will use 2 matrices at max)
+//I will use the sizes as global variables
+
 int main()
 {
-    int m, n; //size of the m*n matrix
-    Line *matrix1, *matrix2; //in fact we need to choose wether head is of type Node1 or Node2 according to the chosen presentation
+    Line *matrix1, *matrix2, *matrix3; //in fact we need to choose whether head is of type Node1 or Node2 according to the chosen presentation
     printf("Enter the size of the matrix (lines, columns): ");
-    scanf("%d %d", &m, &n);
+    scanf("%d %d", &m1, &n1);
+    m2=m1;n2=n1; //to be deleted later
 
     //implementing the second presentation
 
     //Task1
-    createMatrix(&matrix1, m, n);
+    createMatrix(&matrix1, m1, n1);
 
     //Task2
-    showMatrix(matrix1, n);
+    showMatrix(matrix1, n1);
 
     //Task3
     /*
@@ -30,9 +33,17 @@ int main()
     showMatrix(matrix2, C2-C1+1);   */
 
     //Task4
+    /*
     printf("\n\nThis is matrix2\n\n");
     createMatrix(&matrix2, m, n);
     sumMatrix(matrix1, matrix2);
-    showMatrix(matrix1, n);
+    showMatrix(matrix1, n);     */
+
+    //Task5
+    printf("\n\nThis is matrix2\n\n");
+    createMatrix(&matrix2, m1, n1);
+    //multiplyMatrixVector(Line* matrix1);
+    matrix3=multiplyMatrixMatrix(matrix1, matrix2, m1, n1, m2, n2);
+    showMatrix(matrix3, n2);
     return 0;
 }
