@@ -1,7 +1,9 @@
 #ifndef LIBRARY_H_INCLUDED
 #define LIBRARY_H_INCLUDED
 
+
 //For the first presentation
+
 typedef struct Node1 {
     int val;
     int row;
@@ -24,11 +26,12 @@ typedef struct Line{
 
 //The functions:
 
-void createMatrix(Line** head, int m, int n);
+void createMatrix(FILE *file, Line** head, int m, int n);
 void createNullMatrix(Line** head, int m, int n);
-void showMatrix(Line* matrix, int columns);
-Line* extractMatrix(Line* matrix, int L1, int C1, int L2, int C2);
-void sumMatrix(Line* matrix1, Line* matrix2);
+void showMatrix(Line* matrix, int lines, int columns);
+void extractMatrix(Line* matrix, int L1, int C1, int L2, int C2);
+void divideMatrix(Line* matrix, int m1, int n1, int m2, int n2);
+void sumMatrix(Line* matrix1, Line* matrix2, int m, int n);
 //Line* multiplyMatrixVector(Line* matrix1);
 Line* multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, int n2);
 #endif // LIBRARY_H_INCLUDED
