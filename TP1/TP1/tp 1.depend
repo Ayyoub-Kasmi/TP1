@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1648710688 source:d:\esi\semËstre 2\programation avec c\tp 1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<math.h>
+	"library.h"
+
+1647788678 source:d:\esi\semËstre 2\programation avec c\tp 1\library.c
+	"library.h"
+
+1647788816 d:\esi\semËstre 2\programation avec c\tp 1\library.h
+
