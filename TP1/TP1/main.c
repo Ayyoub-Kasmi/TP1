@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "library.h"
 
 int main()
@@ -7,7 +8,7 @@ int main()
     FILE *file;
     file=fopen("C:\\Users\\ayyoubkasmi\\Documents\\GitHub\\TP1\\TP1\\TP1\\input.txt", "r");
 
-    Line *matrix1, *matrix2, *matrix3; //in fact we need to choose whether head is of type Node1 or Node2 according to the chosen presentation
+    Line *matrix1, *matrix2; //in fact we need to choose whether head is of type Node1 or Node2 according to the chosen presentation
     int m1, n1, m2, n2;
 
     printf("Enter the size of the matrix (lines, columns): ");
@@ -46,19 +47,29 @@ int main()
     //Task5
 
     printf("\n\nThis is matrix2\n\n");
-    createMatrix(file, &matrix2, m1, n1); //the 2nd matrix must have the same size as matrix1
-    showMatrix(matrix2, m1, n1);
-    sumMatrix(matrix1, matrix2, m1, n1);
+    //createMatrix(file, &matrix2, m1, n1); //the 2nd matrix must have the same size as matrix1
+    //showMatrix(matrix2, m1, n1);
+    printf("\nThis is the sum: \n");
+    sumMatrices(file, matrix1, m1, n1); //this function will modify the matrix
+    //consider creating a "deleteMatrix" function to delete matrix2 after each sum and then create a new one inside the sumMatrix
+    //function and read values from it
+
 
     //Task6
-    /*
+/*
     printf("\n\nThis is matrix2\n\n");
-    createMatrix(&matrix2, m1, n1);
-    //multiplyMatrixVector(Line* matrix1);
-    matrix3=multiplyMatrixMatrix(matrix1, matrix2, m1, n1, m2, n2);
-    showMatrix(matrix3, n2);
-    */
+    createMatrix(file, &matrix2, m2, n2); //this is the vector
+    showMatrix(matrix2, m2, n2);
+    printf("\nThis is the result of the multiplication: \n");
+    //multiplyMatrixVector(matrix1, matrix2, m1, n1);
+    multiplyMatrixMatrix(matrix1, matrix2, m1, n1, m2, n2);
+*/
 
+    //Task7  => done!
+/*
+    printf("\n This is the transposed matrix: \n");
+    transpose(matrix1, m1, n1);
+*/
     fclose(file);
     return 0;
 }
