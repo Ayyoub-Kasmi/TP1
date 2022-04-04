@@ -154,6 +154,7 @@
       }// else 2
     }//end function
   //*********************************************************************************************************
+   //8)operations logiques
   void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl){
    Maillon_vecteur *p,*f;
    int i,j,s;
@@ -184,7 +185,7 @@
       }// end for i
     }// end else 0
        break;
-//**************************************************************************************************
+//******************************
 
     case 2: // begin case 2
        if (tete1==NULL || tete2==NULL){
@@ -220,7 +221,7 @@
 
         }// end big else
          break;
-//**************************************************************************************************
+//*************************
     case 3 : //begin ou
         if (tete1==NULL && tete2==NULL){
           printf("La matrice OU : \n");
@@ -263,7 +264,7 @@
 
         }//end big else
         break;
-//**************************************************************************************************
+//****************************
 
       case 4: //begin oux
           if (tete1==NULL && tete2==NULL){
@@ -315,4 +316,49 @@
             }// end switch
   }
   //*********************************************************************************************************
+   //7)Transposée d'une matrice
+   void transposer(Maillon_vecteur *tete,int li,int cl){
+    Maillon_vecteur *p,*l;
+    int i,j,k;
+    if (tete==NULL){
+       printf("La matrice transpose de la matrice nulle : \n");
+       affiche_M_nule(cl,li);
+    }
+    else {//big eles
+     l=tete;
+     k=1;
+    while (k<=cl){//begin while
+      p=l;
+     for (i=1;i<=li;i++){//begin i
+      for (j=1;j<=cl;j++){//begin j
+       if (j==k){//if k=j
+        if (p->ligne==i && p->colonne==j){//if2
+         printf("%d\t|",p->val);
+         p=p->next;
+        }//end if2
+        else printf("0\t|");
+       }//end if k=j
+       else {// if k<>j
+        if (p->ligne==i && p->colonne==j){// if 111
+            p=p->next;
+        }// end if 111
+
+       }// end if k<>j
+
+      }//end j
+     }// end i
+     printf("\n");
+      k++;
+      if (l->ligne == l->next->ligne){//begin dernier if
+        l=l->next;
+      }//end dernier if
+
+    }//end while
+
+    }//end big else
+
+
+   }
+   //******************************************************************************************************
+
 

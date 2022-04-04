@@ -66,6 +66,9 @@ int main()
      operations_logiques(head,ras,li,cl);
      break;
  //***********************************************************************************************
+     case 7 : transposer(head,li,cl);
+              break;
+ //***********************************************************************************************
  default : printf("\n Le choix n\'exsiste pas ! \n");
            break;
 
