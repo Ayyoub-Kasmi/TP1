@@ -1,16 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <math.h>
 #include "library.h"
 
- typedef struct Maillon_vecteur{
-
-      int val;
-      int ligne;
-      int colonne;
-      struct Maillon_vecteur *next;
-    }Maillon_vecteur;
 
     //***************************   Menu !  ****************************************
     // 1)************ Lecture d'une matrice et création de la liste ****************
@@ -25,17 +17,64 @@
 int main()
 {
 
-  Maillon_vecteur *head,*f;
-  int li,cl;
+  Maillon_vecteur *head,*ras;
+  int li,cl,ip,jp,id,jd,n,m,choix,b;
+  do{
+  printf("***************************   Menu !  **************************************** \n");
+  printf("2)************ Affichage d\'une matrice ************************************** \n");
+  printf("3)************ Extraction d\'une sous matrice********************************* \n");
+  printf("4)************ Division d\'une matrice en sous-blocs de taille egale********** \n");
+  printf("5)************ Addition de deux ou plusieurs matrices************************* \n");
+  printf("6)************ Multiplication par vecteur, multiplication de deux matrices**** \n");
+  printf("7)************ Transposée d\'une matrice************************************** \n");
+  printf("8)************Operations logiques : NON, ET, OU, OU exclusif****************** \n");
   printf("Donner le nombre de lignes : ");
    scanf("%d",&li);
    printf("Donner le nombre de colonnes : ");
    scanf("%d",&cl);
-  Lecture(&head,li,cl);
-  Afficher(head,li,cl);
-  Extract(head,li,cl);
+   /*1)*/ Lecture(&head,li,cl); // la lecture c'est pas un choix car elle est obligatoire !
+   printf("Donner votre choix : ");
+   scanf("%d",&choix);
+ switch (choix){
 
+   case 2:  Afficher(head,li,cl);
+          break;
+ //***********************************************************************************************
+   case 3 :
+   printf("donner le nemuro de la ligne de la premiere case : ");
+   scanf("%d",&ip);
+   printf("donner le nemuro de la colonne de la premiere case : ");
+   scanf("%d",&jp);
+   printf("donner le nemuro de la ligne de la derniere case : ");
+   scanf("%d",&id);
+   printf("donner le nemuro de la colonne de la derniere case : ");
+   scanf("%d",&jd);
+   Extract(head,li,cl,ip,jp,id,jd);
+   break;
+ //************************************************************************************************
+     case 4 :
+     printf("\n donner n : ");
+     scanf("%d",&n);
+     printf("\n donner m : ");
+     scanf("%d",&m);
+     Diviser(head,li,cl,n,m);
+     break;
+     //************************************************************************************************
+     case 8 :
+     Lecture(&ras,li,cl);
+     Afficher(ras,li,cl);
+     operations_logiques(head,ras,li,cl);
+     break;
+ //***********************************************************************************************
+ default : printf("\n Le choix n\'exsiste pas ! \n");
+           break;
 
+ }// end switch
+ //************************************************************************************************
+    printf("si vous voulez repeter le programme entrer 1 sinon entrer 0 :  ");
+    scanf("%d",&b);
+  }while (b!=0);
+    printf(" \n Merci de votre participatoin (: \n");
 
     return 0;
 }

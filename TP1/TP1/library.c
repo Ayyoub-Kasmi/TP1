@@ -1,26 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <math.h>
 #include "library.h"
-typedef struct Maillon_vecteur{
 
-      int val;
-      int ligne;
-      int colonne;
-      struct Maillon_vecter *next;
-    }Maillon_vecteur;
 
-//***************************************************************************************************************************
-void affiche_M_nule(int a,int b){
-     int  k,h;
-     for (k=1;k<=a;k++){
-        for (h=1;h<=b;h++){
-            printf("0 | ");
-        }
-        printf("\n");
-     }
-   }
-//****************************************************************************************************************************
+
+//*************************************************************************************************************
  // 1)Lecture d'une matrice et création de la liste
  void Lecture (Maillon_vecteur **tete,int li,int cl){
     Maillon_vecteur *p,*q;
@@ -54,7 +39,18 @@ void affiche_M_nule(int a,int b){
      } // end j
   } // end i
   }
-//****************************************************************************************************************************
+  //****************************************************************************************************************************
+  // Afficher matrice nulle
+  void affiche_M_nule(int a,int b){
+     int  k,h;
+     for (k=1;k<=a;k++){
+        for (h=1;h<=b;h++){
+            printf("0 | ");
+        }
+        printf("\n");
+     }
+   }
+//*************************************************************************************************************
 //2)Affichage d'une matrice
 
   void Afficher(Maillon_vecteur *tete,int l,int c){
@@ -82,19 +78,11 @@ void affiche_M_nule(int a,int b){
    }
 
   }
-  //****************************************************************************************************************************
+  //***********************************************************************************************************
   //3)Extraction d’une sous matrice
-  void Extract(Maillon_vecteur *tete,int li,int cl){
-   int ip,jp,id,jd,i,j;
+  void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd){
+   int i,j;
    Maillon_vecteur *p;
-  printf("donner le nemuro de la ligne de la premiere case : ");
-   scanf("%d",&ip);
-   printf("donner le nemuro de la colonne de la premiere case : ");
-   scanf("%d",&jp);
-   printf("donner le nemuro de la ligne de la derniere case : ");
-   scanf("%d",&id);
-   printf("donner le nemuro de la colonne de la derniere case : ");
-   scanf("%d",&jd);
    // 3)Extraction d’une sous matrice
     if (tete==NULL){
        printf("l\'extraction est impossible car la matrice est nulle ! \n");
@@ -125,7 +113,6 @@ void affiche_M_nule(int a,int b){
        if (p->ligne==i && p->colonne==j){ // if b
       p=p->next;
       } // end if b
-
     }// end for j
     printf("\n");
     if (i==id && j==jd)
@@ -134,5 +121,198 @@ void affiche_M_nule(int a,int b){
      } // end else 2
        } // end else 1
        }
-  //****************************************************************************************************************************
+//**************************************************************************************************************
+    void Diviser(Maillon_vecteur *tete,int li,int cl,int n,int m){
+      int ip,jp,id,jd,x,y,k=1;
+      x=li/n;
+      y=cl/n;
+      ip=1;
+      id=x;
+      if (tete==NULL){ // if 1
+        printf("La division est impossible ! \n");
+      } // end if 1
+      else { //else 1
+       if (li%n!=0 && cl%m!=0){// if 2
+        printf("La division est impossible ! \n");
+       }//end if 2
+       else {//else 2
+        while (id<=li){// begin while 1
+             jp=1;
+             jd=y;
+            while (jd<=cl){ // begin while 2
+             printf("Sous_matrice nemuro %d : \n ",k);
+             Extract(tete,li,cl,ip,jp,id,jd);
+             printf("\n");
+             jp+=y;
+             jd+=y;
+             k++;
+          }//end while 2
+          ip+=x;
+          id+=x;
+        }// end while 1
+       }// end else 2
+      }// else 2
+    }//end function
+  //*********************************************************************************************************
+  void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl){
+   Maillon_vecteur *p,*f;
+   int i,j,s;
+    printf("*************** NON : 1 *************** \n");
+    printf("**************** ET : 2 *************** \n");
+    printf("**************** OU : 3 *************** \n");
+    printf("*************** OUX : 4 *************** \n");
+    printf("Donner votre choix : \n");
+    scanf("%d",&s);
+    switch (s){//begin switch
+    case 1: // begin case 1
+        if (tete1==NULL){//if0
+          printf("La matrice est NULL");
+          affiche_M_nule(li,cl);
+        }//end if0
+        else {//begin else 0
+        p=tete1;
+        printf("La Matrice NON de la premiere matrice  : \n");
+      for (i=1;i<=li;i++){//begin for i
+        for (j=1;j<=cl;j++){//begin for j
+         if (p->ligne==i && p->colonne==j){// begin if 1
+    printf("%d\t|",~p->val);
+    p=p->next;
+    }//end if 1
+    else printf("0\t|");
+        }//end for j
+        printf("\n");
+      }// end for i
+    }// end else 0
+       break;
+//**************************************************************************************************
+
+    case 2: // begin case 2
+       if (tete1==NULL || tete2==NULL){
+        printf("La matrice ET : \n");
+        affiche_M_nule(li,cl);
+       }
+    else { // big else
+            p=tete1;
+            f=tete2;
+         printf("La matrice ET : \n");
+       for (i=1;i<=li;i++){//begin for i
+        for (j=1;j<=cl;j++){//begin for j
+           if ((p->ligne==i && p->colonne==j) && (f->ligne==i && f->colonne==j)){//begin if1
+            printf("%d\t|",p->val & f->val);
+            p=p->next;
+            f=f->next;
+           }//end if1
+           else if ((p->ligne==i && p->colonne==j) && (f->ligne!=i || f->colonne!=j)){// if2
+            printf("0\t|");
+            p=p->next;
+           }//end if2
+           else if((f->ligne==i && f->colonne==j) && (p->ligne!=i || p->colonne!=j)){//if3
+            printf("0\t|");
+            f=f->next;
+           }//end if3
+           else if((p->ligne!=i || p->colonne!=j) && (f->ligne!=i || f->colonne!=j)){//if4
+            printf("0\t|");
+           }//end if4
+
+         }//end for j
+         printf("\n");
+        }// end for i
+
+        }// end big else
+         break;
+//**************************************************************************************************
+    case 3 : //begin ou
+        if (tete1==NULL && tete2==NULL){
+          printf("La matrice OU : \n");
+          affiche_M_nule(li,cl);
+        }
+        else if (tete1==NULL && tete2!=NULL){
+          printf("La matrice OU : \n");
+          Afficher(tete2,li,cl);
+        }
+        else if (tete1!=NULL && tete2==NULL){
+            printf("La matrice OU : \n");
+          Afficher(tete1,li,cl);
+        }
+        else if (tete1!=NULL && tete2!=NULL){//begin big else
+         p=tete1;
+         f=tete2;
+         printf("La matrice OU : \n");
+       for (i=1;i<=li;i++){//begin for i
+        for (j=1;j<=cl;j++){//begin for j
+           if ((p->ligne==i && p->colonne==j) && (f->ligne==i && f->colonne==j)){//begin if1
+            printf("%d\t|",p->val | f->val);
+            p=p->next;
+            f=f->next;
+           }//end if1
+           else if ((p->ligne==i && p->colonne==j) && (f->ligne!=i || f->colonne!=j)){// if2
+            printf("%d\t|",p->val);
+            p=p->next;
+           }//end if2
+           else if((f->ligne==i && f->colonne==j) && (p->ligne!=i || p->colonne!=j)){//if3
+            printf("%d\t|",f->val);
+            f=f->next;
+           }//end if3
+           else if((p->ligne!=i || p->colonne!=j) && (f->ligne!=i || f->colonne!=j)){//if4
+            printf("0\t|");
+           }//end if4
+
+         }//end for j
+         printf("\n");
+        }// end for i
+
+        }//end big else
+        break;
+//**************************************************************************************************
+
+      case 4: //begin oux
+          if (tete1==NULL && tete2==NULL){
+            printf("La matrice OUX : \n");
+            affiche_M_nule(li,cl);
+          }
+          else if (tete1==NULL && tete2!=NULL){
+            printf("La matrice OUX : \n");
+            Afficher(tete2,li,cl);
+          }
+          else if (tete1!=NULL && tete2==NULL){
+            printf("La matrice OUX : \n");
+            Afficher(tete1,li,cl);
+          }
+              else if (tete1!=NULL && tete2!=NULL){// big else
+             p=tete1;
+             f=tete2;
+             printf("La matrice OUX : \n");
+                for (i=1;i<=li;i++){//begin for i
+                for (j=1;j<=cl;j++){//begin for j
+                   if ((p->ligne==i && p->colonne==j) && (f->ligne==i && f->colonne==j)){//begin if1
+                    printf("%d\t|",p->val ^ f->val);
+                    p=p->next;
+                    f=f->next;
+                   }//end if1
+                   else if ((p->ligne==i && p->colonne==j) && (f->ligne!=i || f->colonne!=j)){// if2
+                    printf("%d\t|",p->val ^ 0);
+                    p=p->next;
+                   }//end if2
+                   else if((f->ligne==i && f->colonne==j) && (p->ligne!=i || p->colonne!=j)){//if3
+                    printf("%d\t|",f->val ^ 0);
+                    f=f->next;
+                   }//end if3
+                   else if((p->ligne!=i || p->colonne!=j) && (f->ligne!=i || f->colonne!=j)){//if4
+                    printf("0\t|");
+                   }//end if4
+
+                 }//end for j
+                 printf("\n");
+                }// end for i
+
+                  }// end big else
+                  break;
+
+             default : printf("Le choix %d n\'exsiste pas ! \n",s);
+                       break;
+
+
+            }// end switch
+  }
+  //*********************************************************************************************************
 

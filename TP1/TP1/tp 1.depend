@@ -11,18 +11,17 @@
 
 1647788816 d:\esi\semËstre 2\programation avec c\tp 1\library.h
 
-1648910538 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\main.c
+1649078781 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\main.c
 	<stdio.h>
 	<stdlib.h>
-	<stdbool.h>
 	<math.h>
 	"library.h"
 
-1648910722 c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.h
+1649075999 c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.h
 
-1648910366 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.c
+1649079702 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.c
 	<stdio.h>
 	<stdlib.h>
-	<stdbool.h>
+	<math.h>
 	"library.h"
 
