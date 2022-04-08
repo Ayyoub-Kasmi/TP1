@@ -360,5 +360,55 @@
 
    }
    //******************************************************************************************************
+   //8)Multiplication par vecteur, multiplication de deux matrices
+    void multiplication(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li1,int lc,int ch){
+   Maillon_vecteur *p,*f;
+   int i,j,s;
+   //***********************************
+   if (ch==1){
+   if (tete1==NULL || tete2==NULL){
+     printf("\n Le produit est nulle ! \n");
+     affiche_M_nule(li1,1);
+   }
+   else {
+   i=1;
+   p=tete1;
+   printf("Le vecteur multiplication est : \n");
+   while (i<=li1){//begin big while
+   f=tete2;
+   s=0;
+   for (j=1;j<=lc;j++){//begin for j
+   if (p->ligne==i && p->colonne==j && f->ligne==j){ // 00
+    s=s+ p->val*f->val;
+    p=p->next;
+    f=f->next;
+   }// end 00
+    else if (p->ligne==i && p->colonne==j && f->ligne!=j)
+        p=p->next;
+    else if ((p->ligne!=i || p->colonne!=j) && f->ligne==j)
+        f=f->next;
+
+   }//end for j
+   printf("%d\t|",s);
+   printf("\n");
+   i++;
+   }//end big while
+   }
+   }
+   //**********************************
+   else if (ch==2){
+
+
+
+
+   }
+   else printf("Le choix %d n\'exsiste pas ! \n",ch);
+
+
+
+
+
+  }
+   //******************************************************************************************************
 
 

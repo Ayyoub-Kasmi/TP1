@@ -18,7 +18,7 @@ int main()
 {
 
   Maillon_vecteur *head,*ras;
-  int li,cl,ip,jp,id,jd,n,m,choix,b;
+  int li,cl,ip,jp,id,jd,n,m,choix,b,ch;
   do{
   printf("***************************   Menu !  **************************************** \n");
   printf("2)************ Affichage d\'une matrice ************************************** \n");
@@ -68,6 +68,21 @@ int main()
  //***********************************************************************************************
      case 7 : transposer(head,li,cl);
               break;
+ //***********************************************************************************************
+     case 6 :
+   printf(" \n Pour multiplication par vecteur donner 1 , pour multiplication par matrice donner 2 \n");
+   scanf("%d",&ch);
+        if (ch==1){
+        printf("donner le vecteur : \n");
+        Lecture(&ras,cl,1);
+        Afficher(ras,cl,1);
+        multiplication(head,ras,li,cl,ch);
+        }
+        else if (ch==2){
+
+        }
+        break;
+
  //***********************************************************************************************
  default : printf("\n Le choix n\'exsiste pas ! \n");
            break;
