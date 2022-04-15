@@ -358,9 +358,10 @@ void Effacer_tout(Maillon_vecteur **tete){
   }
   //*********************************************************************************************************
    //7)Transposée d'une matrice
-   void transposer(Maillon_vecteur *tete,int li,int cl){
-    Maillon_vecteur *p,*l;
+   void transposer2(Maillon_vecteur **hand,Maillon_vecteur *tete,int li,int cl){
+    Maillon_vecteur *p,*l,*a1,*a2;
     int i,j,k;
+    *hand=NULL;
     if (tete==NULL){
        printf("La matrice transpose de la matrice nulle : \n");
        affiche_M_nule(cl,li);
@@ -374,10 +375,26 @@ void Effacer_tout(Maillon_vecteur **tete){
       for (j=1;j<=cl;j++){//begin j
        if (j==k){//if k=j
         if (p->ligne==i && p->colonne==j){//if2
-         printf("%d\t|",p->val);
+         //printf("%d\t|",p->val);
+         a1=(Maillon_vecteur *)malloc(sizeof(Maillon_vecteur));
+         if (*hand==NULL){
+         a2=(Maillon_vecteur *)malloc(sizeof(Maillon_vecteur));
+         *hand=a2;
+         }
+         a2->ligne=j;
+         a2->colonne=i;
+         a2->val=p->val;
+         if (i==li && j==cl){
+        a2->next=NULL;
+        free(a1);
+       }
+       else {
+        a2->next=a1;
+         a2=a2->next;
+       }
          p=p->next;
         }//end if2
-        else printf("0\t|");
+       // else printf("0\t|");
        }//end if k=j
        else {// if k<>j
         if (p->ligne==i && p->colonne==j){// if 111
@@ -388,7 +405,7 @@ void Effacer_tout(Maillon_vecteur **tete){
 
       }//end j
      }// end i
-     printf("\n");
+    // printf("\n");
       k++;
       if (l->ligne == l->next->ligne){//begin dernier if
         l=l->next;
@@ -397,7 +414,6 @@ void Effacer_tout(Maillon_vecteur **tete){
     }//end while
 
     }//end big else
-
 
    }
   //*********************************************************************************************************
