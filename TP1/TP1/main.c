@@ -35,8 +35,12 @@ int main()
    scanf("%d",&cl);
    /*1)*/ Lecture(&head,li,cl); // la lecture c'est pas un choix car elle est obligatoire !
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    Afficher(head,li,cl);
 
+=======
+          Afficher(head,li,cl);
+>>>>>>> Stashed changes
 =======
           Afficher(head,li,cl);
 >>>>>>> Stashed changes
