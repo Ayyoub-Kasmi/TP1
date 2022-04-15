@@ -7,37 +7,37 @@
 
 //*************************************************************************************************************
  // 1)Lecture d'une matrice et création de la liste
- void Lecture (Maillon_vecteur **tete,int li,int cl){
+void Lecture (Maillon_vecteur **tete,int li,int cl){
     Maillon_vecteur *p,*q;
     int i,j,n;
     *tete=NULL;
- for (i=1;i<=li;i++){ // begin for i
-     for (j=1;j<=cl;j++){ // begin for j
-     printf("T[%d,%d]=",i,j);
-     scanf("%d",&n);
-     if (n==0){
-        continue;
-     }
-     else { //begin else
-       q=(Maillon_vecteur *)malloc(sizeof(Maillon_vecteur));
-       if(*tete==NULL){ // begin if tete==null
-       p=(Maillon_vecteur *)malloc(sizeof(Maillon_vecteur));
-        *tete=p;
-       } // end if tete==null
-       p->val=n;
-       p->ligne=i;
-       p->colonne=j;
-       if (i==li && j==cl){
-        p->next=NULL;
-        free(q);
-       }
-       else {
-        p->next=q;
-       p=p->next;
-       }
-     } // end else
-     } // end j
-  } // end i
+    for (i=1;i<=li;i++){ // begin for i
+        for (j=1;j<=cl;j++){ // begin for j
+            printf("T[%d,%d]=",i,j);
+            scanf("%d",&n);
+
+            if (n==0){
+                continue;
+            } else { //begin else
+
+                q=(Maillon_vecteur *)malloc(sizeof(Maillon_vecteur));
+
+                q->val=n;
+                q->ligne=i;
+                q->colonne=j;
+                q->next=NULL;
+
+                if(*tete==NULL){
+                    *tete=q;
+                    p= *tete;
+                }
+
+                p->next=q;
+                p=q;
+
+            } // end else
+        } // end j
+    } // end i
   }
   //****************************************************************************************************************************
   // Afficher matrice nulle

@@ -19,6 +19,7 @@ int main()
 
   Maillon_vecteur *head,*ras;
   int li,cl,ip,jp,id,jd,n,m,choix,b,ch;
+
   do{
   printf("***************************   Menu !  **************************************** \n");
   printf("2)************ Affichage d\'une matrice ************************************** \n");
@@ -33,6 +34,7 @@ int main()
    printf("Donner le nombre de colonnes : ");
    scanf("%d",&cl);
    /*1)*/ Lecture(&head,li,cl); // la lecture c'est pas un choix car elle est obligatoire !
+
    printf("Donner votre choix : ");
    scanf("%d",&choix);
  switch (choix){
@@ -96,3 +98,32 @@ int main()
 
     return 0;
 }
+
+/* Algorithme de multiplication:
+
+    matrice1(m1, m2), matrice2(m2, n2), coordonné: (i,k) x (k,j)
+
+    for(i: 1 => m1)
+
+        //ici chercher le premier maillion de la ligne i, soit "debut"
+
+        for(j: 1 => n2)
+
+            P2=tete2;
+            P1=debut;
+
+            for(k: 1 => m2)
+                //ici chercher le maillon avec la colonne j (une fonction pour la recherche)
+
+                SI( //verifier si k est le meme )
+                |   valeur += valeur(P1) * valeur(P2)
+                |   P1 = suivant(P1), P2 = suivant(P2)
+                |
+                FSI
+
+                SI (ligne(P1) <= k) alors : P1= suivant(P1)
+                SI (col(P2) <= k) alors :  chercher le maillon de la ligne suivante
+                (ici la remarque est que la ligne ou la colonne ne doit pas etre incrementé sauf
+                    quand sa valeur est <= K, sinon on vas depacer le k)
+
+*/
