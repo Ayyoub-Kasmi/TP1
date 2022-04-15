@@ -5,6 +5,7 @@
 
 int main()
 {
+
     FILE *file;
     file=fopen("C:\\Users\\ayyoubkasmi\\Documents\\GitHub\\TP1\\TP1\\TP1\\input.txt", "r");
 
@@ -24,6 +25,8 @@ int main()
     //Task2
     showMatrix(matrix1, m1, n1);
 
+    printf("Trial: \n\n\n");
+	printf("Here is the value: %d\n\n\n", strcmp("helloe", "helloe"));
     //Task3
 /*
     int L1, C1, L2, C2; //the indexes of the starting and ending cells
@@ -36,8 +39,9 @@ int main()
     extractMatrix(matrix1, L1, C1, L2, C2);
 */
 
-/*
+
     //Task4
+/*
     printf("\n***Dividing the matrix into n x m sub-matrices***\n");
     printf("Enter the sizes of the sub matrices: ");
     fscanf(file, "%d %d", &m2, &n2);
@@ -47,10 +51,10 @@ int main()
     //Task5
 
     printf("\n\nThis is matrix2\n\n");
-    //createMatrix(file, &matrix2, m1, n1); //the 2nd matrix must have the same size as matrix1
-    //showMatrix(matrix2, m1, n1);
-    printf("\nThis is the sum: \n");
-    sumMatrices(file, matrix1, m1, n1); //this function will modify the matrix
+    createMatrix(file, &matrix2, m1, n1); //the 2nd matrix must have the same size as matrix1
+    showMatrix(matrix2, m1, n1);
+    //printf("\nThis is the sum: \n");
+    //sumMatrices(file, matrix1, m1, n1); //this function will modify the matrix
     //consider creating a "deleteMatrix" function to delete matrix2 after each sum and then create a new one inside the sumMatrix
     //function and read values from it
 
@@ -70,6 +74,9 @@ int main()
     printf("\n This is the transposed matrix: \n");
     transpose(matrix1, m1, n1);
 */
+    //Task8
+
+    logicalOperationMatrix(matrix1, matrix2, m1, n1);
     fclose(file);
     return 0;
 }

@@ -3,6 +3,9 @@
 #include <math.h>
 #include "library.h"
 
+//abstract machine
+//counter for nodes
+
 //Auxiliary functions:
 
 void createLineNode(Line** node, int i){
@@ -119,6 +122,38 @@ void removeNullLines(Line **matrix){
             }
         }
     }
+}
+
+void removeColumnNode(Line* matrix, int line, int column){
+    //the node is supposed already existent in the matrix
+    Line *P=matrix, *P2;
+    Node2 *Q, *previous;
+
+    while(P->number != line){
+        P2=P;
+        P=P->next;
+    }
+
+    Q=P->first;
+
+    while(Q->col != column){
+        previous=Q;
+        Q=Q->next;
+    }
+
+    if(Q==P->first){
+        //Q is the first node in the line
+        P->first = Q->next;
+    } else {
+        previous->next = Q->next;
+    }
+    //what if the node is in the last line
+    //to fix later
+    if(P->next==NULL){
+        P2->next=NULL;
+        free(P);
+    }
+    free(Q);
 }
 
 void deleteMatrix(Line **matrix){
@@ -429,27 +464,26 @@ void divideMatrix(Line* matrix, int m1, int n1, int m2, int n2){
     if(m1%m2 != 0 || n1%n2 != 0){
         printf("The matrix can not be divided!\n");
     } else { //The matrix can be divided
-        //We will start with the normal case
 
-        //say we divided the matrix into some m lines, now we print column divisions for each line then we move to
-        //the next line partition
+        //The approach is as following: the matrix is divided into sub-lines, and each line is divided into sub=columns
 
-        //we will need parameters to know in which partition we are
-        int Lmin= 1, Lmax = m2, Cmin, Cmax;  //later on, we increment each parameter by m1 or n1
+
+        int li= m1/m2 , cl = n1/n2, Lmin= 1, Lmax = li, Cmin, Cmax;
 
         //now we got the coordinates, let's print the sub matrix
         int i=1;
+        //divide
         while(Lmax<=m1){
             Cmin=1;
-            Cmax=n2;
+            Cmax=cl;
             while(Cmax <= n1){
                 printf("Matrix %d: \n", i);
                 i++;
                 extractMatrix(matrix, Lmin, Cmin, Lmax, Cmax);
                 printf("\n");
-                Cmin+=n2; Cmax+=n2;
+                Cmin+=cl; Cmax+=cl;
             }
-            Lmin+=m2; Lmax+=m2;
+            Lmin+=li; Lmax+=li;
         }
 
     }
@@ -589,13 +623,13 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
     //To add here: if one of the matrices is already null, the result is null
     //the following code will consider that both matrices are non null
 
-    //1- I will look up the non null columns in the matrix and at the same time, the maximum non column
-    //the reason for doing this is to avoid passing through null columns multiple times during multiplication
-    //the idea is that I will use a min variable, initialized to 1, and then increment it to the next available column value
+    //1- I will look up the non null columns in the matrix and at the same time, the maximum non null column.
+    //The reason for doing this is to avoid passing through null columns multiple times during multiplication.
+    //The idea is that I will use a min variable, initialized to 1, and then increment it to the next available column value
     //(with skipping null columns!! using the tmp variable), then going until there's no higher column value available
 
     tmp=1;
-    do{ //the loop will keep going, the condition to stop is set using a break
+    do{
         min=tmp; //we start with min=1
         P2=matrix2;
         while(P2!=NULL){ //looking for non null columns in each line
@@ -749,17 +783,29 @@ void logicalOperation(Line* matrix, int value, int line, int column, int oper){
         Q=Q->next;
     }
 
-    switch(oper){
-        1:
-    }
-    Q->val = Q->val value;
+    switch(oper){ //operations are: 1-negation 2-AND 3-OR 4-XOR
+        case 1:
+            Q->val = -Q->val;
+            break;
 
+        case 2:
+            Q->val = Q->val & value;
+            break;
+
+        case 3:
+            Q->val = Q->val | value;
+            break;
+        case 4:
+            Q->val = Q->val ^ value; //verify the operator char
+            break;
+    }
 
     if(Q->val == 0){
         if(Q==P->first){
             //Q is the first node in the line
             P->first = Q->next;
         } else {
+
             previous->next = Q->next;
         }
 
@@ -782,42 +828,77 @@ void logicalOperationMatrix(Line* matrix1, Line* matrix2, int m, int n){
 
     int oper; //the operator of the logical operation will be referenced to by a number
     printf("Choose the logical operation(Enter the number corresponding to the operation): \n");
-    printf("1: AND \n 2:OR \n 3:")
-    while(P2!=NULL){
-        Q2=P2->first;
+    printf("1: NEGATION \n 2: AND \n 3: OR \n 4: XOR\n");
+    printf("Operation: ");
+    scanf("%d", &oper);
 
-        while(Q2!=NULL){
-            if( nodeExists(matrix1, P2->number, Q2->col, &tmp) ){ //nodeExists was changed here, check the modifications
-                //a node with the same coordinates exists in matrix1
-                //Now Q2 points to the new node
-                //I look up the node in matrix 1 and change its value
-                logicalOperation(matrix1, Q2->val, P2->number, Q2->col, oper);
+    switch(oper){
 
-            } else {
-                //a node with the same coordinates does not exist, so the current node will be added to matrix1
-                //verify that that the line exists, if it does not then create it
-                if(!lineExists(matrix1, P2->number)){
+    case 2:
+        //the reason of separating this case from the other cases is because I will go through the nodes of matrix1 and not
+        //matrix2, and that's because x&0=0
+        P1=matrix1;
 
-                    createLineNode(&P1, P2->number);
-                    insertLineNode(&matrix1, P1);
+        while(P1!=NULL){
+            Q1=P1->first;
+
+            while(Q1!=NULL){
+                tmp=Q1; //I will use it to avoid problems after deleting a node
+                Q1=Q1->next;
+                if(nodeExists(matrix2, P1->number, tmp->col, &tmp)){
+                    logicalOperation(matrix1, tmp->val, P1->number, tmp->col, 2);
+
+                } else {
+
+                    removeColumnNode(matrix1, P1->number, tmp->col);
+
                 }
-
-                //create a node identical to Q2
-                createColumnNode(&Q1, Q2->val, Q2->col);
-
-                //insert the node
-                insertColumnNode(matrix1,P1->number, Q1); //mistake: the line is supposed to be P1 and not P2. Change the function so that
-                                          //it is possible to insert nodes using line numbers and not line address, because
-                                          //P1 is not accessible in this case
 
             }
 
-            Q2=Q2->next;
+            P1=P1->next;
         }
 
-        P2=P2->next;
+        break;
+
+    default:
+        while(P2!=NULL){
+            Q2=P2->first;
+
+            while(Q2!=NULL){
+
+                if( nodeExists(matrix1, P2->number, Q2->col, &tmp) ){ //nodeExists was changed here, check the modifications
+                    //a node with the same coordinates exists in matrix1
+                    //Now Q2 points to the new node
+                    //I look up the node in matrix 1 and change its value
+                    logicalOperation(matrix1, Q2->val, P2->number, Q2->col, oper);
+
+                } else { // x && 0 = 0, so don't create a node for &&; x || 0 = x; so create a node with value=x
+                    switch(oper){
+
+                    case 3: //verify: x XOR 0 = x
+                        if(!lineExists(matrix1, P2->number)){
+
+                            createLineNode(&P1, P2->number);
+                            insertLineNode(&matrix1, P1);
+                        }
+
+                        createColumnNode(&Q1, Q2->val, Q2->col); //the node is identical to Q2, because x OR 0 = x XOR 0 = X
+                        insertColumnNode(matrix1,P2->number, Q1);
+                        break;
+
+                    } //End switch
+
+                }
+
+                Q2=Q2->next;
+            }
+
+            P2=P2->next;
+        }
+        break;
+
     }
 
-    showMatrix(matrix1, m, n);  //the problem is that matrix1 is not modified in the main function, you might try to use
-                                //&matrix1 later
+    showMatrix(matrix1, m, n);
 }
