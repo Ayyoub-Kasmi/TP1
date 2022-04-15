@@ -4,16 +4,70 @@
 #include "library.h"
 
 
+<<<<<<< HEAD
 // Afficher matrice nulle
   void affiche_M_nule(int a,int b){
      int  k,h;
      for (k=1;k<=a;k++){
+=======
+
+//*************************************************************************************************************
+ // 1)Lecture d'une matrice et création de la liste
+void Lecture (Maillon_vecteur **tete,int li,int cl){
+    Maillon_vecteur *p,*q;
+    int i,j,n;
+    *tete=NULL;
+    for (i=1;i<=li;i++){ // begin for i
+        for (j=1;j<=cl;j++){ // begin for j
+            printf("T[%d,%d]=",i,j);
+            scanf("%d",&n);
+
+            if (n==0){
+                continue;
+            } else { //begin else
+
+                q=(Maillon_vecteur *)malloc(sizeof(Maillon_vecteur));
+
+                q->val=n;
+                q->ligne=i;
+                q->colonne=j;
+                q->next=NULL;
+
+                if(*tete==NULL){
+                    *tete=q;
+                    p= *tete;
+                }
+
+                p->next=q;
+                p=q;
+
+            } // end else
+        } // end j
+    } // end i
+  }
+  //****************************************************************************************************************************
+  // Afficher matrice nulle
+void affiche_M_nule(int a,int b){
+    int  k,h;
+    for (k=1;k<=a;k++){
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
         for (h=1;h<=b;h++){
             printf("0 | ");
         }
         printf("\n");
-     }
-   }
+    }
+}
+
+void afficher_ligne_null(int n, int m){
+//afficher n lignes de colonnes m
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+            printf("0\t|");
+        }
+        printf("\n");
+    }
+}
 //*************************************************************************************************************
 // Lebirer tout la matrice
 void Effacer_tout(Maillon_vecteur **tete){
@@ -79,6 +133,7 @@ void Effacer_tout(Maillon_vecteur **tete){
    }
 
 
+<<<<<<< HEAD
   printf("\n Le nombre de maillon cree est : %d \n",cpt);
   }
 //*************************************************************************************************************
@@ -104,17 +159,58 @@ void Effacer_tout(Maillon_vecteur **tete){
     else printf("0\t|");
     }
     else printf("0\t|");
+=======
+void Afficher(Maillon_vecteur *tete,int l,int c){
+
+    Maillon_vecteur *z, *p;
+    int i,j;
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
+
+    if (tete==NULL){
+        printf(" \n La matrice est nulle ! \n");
+        affiche_M_nule(l,c);
+
+    } else {
+        z=tete;
+        for (i=1;i<=l;i++){
+            for (j=1;j<=c;j++){
+                if (z->ligne==i && z->colonne==j){
+                    printf("%d\t|",z->val);
+                    p=z;
+                    z=z->next;
+                    if(z==NULL){
+                        j=c+1;
+                        i=l+1;
+                        //c'est une methode pour arreter les deux boucles "pour"
+
+                        //afficher les 0 restantes dans la meme ligne, s'ils existent
+                        for(int tmp= p->colonne+1; tmp<=l; tmp++){
+                            printf("0\t|");
+                        }
+                    }
+                } else printf("0\t|");
 
 
+            } //fin pour j
+
+            printf("\n");
+        } //fin pour i
+
+        //afficher les lignes nulles restantes:
+        afficher_ligne_null(l-p->ligne, c);
     }
+<<<<<<< HEAD
     printf("\n");
    }
    }
      printf("\n Le nombre de maillon affiche est : %d \n",cpt);
+=======
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
 
-  }
+}
   //***********************************************************************************************************
   //3)Extraction d’une sous matrice
+<<<<<<< HEAD
   void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd){
    int i,j,cpt=0;
    Maillon_vecteur *p;
@@ -172,45 +268,120 @@ void Effacer_tout(Maillon_vecteur **tete){
       } // end if 1
       else { //else 1
        if (li%n!=0 && cl%m!=0){// if 2
+=======
+void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd){
+    int i,j;
+    Maillon_vecteur *p;
+    // 3)Extraction d’une sous matrice
+    if (tete==NULL){
+        printf("l\'extraction est impossible car la matrice est nulle ! \n");
+    } else { //begin else 1
+        p=tete;
+        if (jp>jd){ // petit if
+            printf("l\'extraction est impossible ! \n");
+        } // end petit if
+        else { // begin else 2
+            printf("L\'extraction de la sous matrice : \n");
+            for (i=1;i<=li;i++){ //begin for i
+                for (j=1;j<=cl;j++){ // begin for j
+                    if (i>=ip && i<=id && j>=jp && j<=jd)  {// begin if 1
+                        if (p->ligne==i && p->colonne==j){ // if a
+                            printf("%d\t|",p->val);
+                        } // end if a
+                        else { // else b
+                            printf("0\t|");
+                        } // end else b
+
+                    } // end if 1
+
+                    if (i==id && j==jd){  // begin if 2
+                        break;
+                    }  // end if 2
+
+                    if (p->ligne==i && p->colonne==j){ // if b
+                        p=p->next;
+                    } // end if b
+                }// end for j
+                printf("\n");
+                if (i==id && j==jd)
+                    break;
+            } // end for i
+        } // end else 2
+    } // end else 1
+}
+//**************************************************************************************************************
+
+void Diviser(Maillon_vecteur *tete,int li,int cl,int n,int m){
+    int ip,jp,id,jd,x,y,k=1;
+    x=li/n;
+    y=cl/n;
+    ip=1;
+    id=x;
+    if (tete==NULL){ // if 1
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
         printf("La division est impossible ! \n");
-       }//end if 2
-       else {//else 2
-        while (id<=li){// begin while 1
-             jp=1;
-             jd=y;
-            while (jd<=cl){ // begin while 2
-             printf("Sous_matrice nemuro %d : \n ",k);
-             Extract(tete,li,cl,ip,jp,id,jd);
-             printf("\n");
-             jp+=y;
-             jd+=y;
-             k++;
-          }//end while 2
-          ip+=x;
-          id+=x;
-        }// end while 1
-       }// end else 2
-      }// else 2
-    }//end function
+    } // end if 1
+    else { //else 1
+        if (li%n!=0 && cl%m!=0){// if 2
+            printf("La division est impossible ! \n");
+        }//end if 2
+        else {//else 2
+            while (id<=li){// begin while 1
+                jp=1;
+                jd=y;
+                while (jd<=cl){ // begin while 2
+                    printf("Sous_matrice nemuro %d : \n ",k);
+                    Extract(tete,li,cl,ip,jp,id,jd);
+                    printf("\n");
+                    jp+=y;
+                    jd+=y;
+                    k++;
+                }//end while 2
+                ip+=x;
+                id+=x;
+            }// end while 1
+        }// end else 2
+    }// else 2
+}//end function
+
   //*********************************************************************************************************
+<<<<<<< HEAD
   //8)Operations logiques : NON, ET, OU, OU exclusif
   void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl){
    Maillon_vecteur *p,*f;
    int i,j,s,cpt=0;
+=======
+   //8)operations logiques
+void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl){
+    Maillon_vecteur *p,*f;
+    int i,j,s;
+
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
     printf("*************** NON : 1 *************** \n");
     printf("**************** ET : 2 *************** \n");
     printf("**************** OU : 3 *************** \n");
     printf("*************** OUX : 4 *************** \n");
+<<<<<<< HEAD
     printf("Donner votre choix : ");
+=======
+
+    printf("Donner votre choix : \n");
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
     scanf("%d",&s);
     switch (s){//begin switch
     case 1: // begin case 1
         if (tete1==NULL){//if0
+<<<<<<< HEAD
          affiche_M_a_1(li,cl);
+=======
+            printf("La matrice est NULL");
+            affiche_M_nule(li,cl);
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
         }//end if0
         else {//begin else 0
         p=tete1;
         printf("La Matrice NON de la premiere matrice  : \n");
+<<<<<<< HEAD
       for (i=1;i<=li;i++){//begin for i
         for (j=1;j<=cl;j++){//begin for j
          if (p->ligne==i && p->colonne==j){// begin if 1
@@ -219,6 +390,15 @@ void Effacer_tout(Maillon_vecteur **tete){
     cpt++;
     }//end if 1
     else printf("1\t|");
+=======
+        for (i=1;i<=li;i++){//begin for i
+            for (j=1;j<=cl;j++){//begin for j
+                if (p->ligne==i && p->colonne==j){// begin if 1
+                printf("%d\t|",~p->val);
+                p=p->next;
+            }//end if 1
+            else printf("0\t|");
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
         }//end for j
         printf("\n");
       }// end for i
