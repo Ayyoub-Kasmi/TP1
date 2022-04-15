@@ -34,6 +34,7 @@ int main()
    printf("Donner le nombre de colonnes : ");
    scanf("%d",&cl);
    /*1)*/ Lecture(&head,li,cl); // la lecture c'est pas un choix car elle est obligatoire !
+   Afficher(head,li,cl);
 
    printf("Donner votre choix : ");
    scanf("%d",&choix);
