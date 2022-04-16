@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1650069591 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"library.h"
+
+1650068837 c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.h
+
+1650068557 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"library.h"
+

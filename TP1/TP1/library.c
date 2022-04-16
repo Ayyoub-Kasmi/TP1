@@ -4,8 +4,7 @@
 #include "library.h"
 
 
-
-//*************************************************************************************************************
+//*******************************************************************************************************************************
  // 1)Lecture d'une matrice et création de la liste
 void Lecture (Maillon_vecteur **tete,int li,int cl){
     Maillon_vecteur *p,*q;
@@ -14,7 +13,7 @@ void Lecture (Maillon_vecteur **tete,int li,int cl){
     for (i=1;i<=li;i++){ // begin for i
         for (j=1;j<=cl;j++){ // begin for j
             printf("T[%d,%d]=",i,j);
-            scanf("%d",&n);
+            scanf(" %d",&n);
 
             if (n==0){
                 continue;
@@ -38,8 +37,8 @@ void Lecture (Maillon_vecteur **tete,int li,int cl){
             } // end else
         } // end j
     } // end i
-  }
-  //****************************************************************************************************************************
+}
+//*******************************************************************************************************************************
   // Afficher matrice nulle
 void affiche_M_nule(int a,int b){
     int  k,h;
@@ -61,7 +60,7 @@ void afficher_ligne_null(int n, int m){
         printf("\n");
     }
 }
-//*************************************************************************************************************
+//*******************************************************************************************************************************
 //2)Affichage d'une matrice
 
 void Afficher(Maillon_vecteur *tete,int l,int c){
@@ -390,41 +389,40 @@ void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,in
    }
    //******************************************************************************************************
    //8)Multiplication par vecteur, multiplication de deux matrices
-    void multiplication(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li1,int lc,int ch){
-   Maillon_vecteur *p,*f;
-   int i,j,s;
+void multiplication(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li1,int lc,int ch){
+    Maillon_vecteur *p,*f;
+    int i,j,s;
    //***********************************
-   if (ch==1){
-   if (tete1==NULL || tete2==NULL){
-     printf("\n Le produit est nulle ! \n");
-     affiche_M_nule(li1,1);
-   }
-   else {
-   i=1;
-   p=tete1;
-   printf("Le vecteur multiplication est : \n");
-   while (i<=li1){//begin big while
-   f=tete2;
-   s=0;
-   for (j=1;j<=lc;j++){//begin for j
-   if (p->ligne==i && p->colonne==j && f->ligne==j){ // 00
-    s=s+ p->val*f->val;
-    p=p->next;
-    f=f->next;
-   }// end 00
-    else if (p->ligne==i && p->colonne==j && f->ligne!=j)
-        p=p->next;
-    else if ((p->ligne!=i || p->colonne!=j) && f->ligne==j)
-        f=f->next;
+    if (ch==1){
+    if (tete1==NULL || tete2==NULL){
+        printf("\n Le produit est nulle ! \n");
+        affiche_M_nule(li1,1);
+    } else {
+        i=1;
+        p=tete1;
+        printf("Le vecteur multiplication est : \n");
+        while (i<=li1){//begin big while
+            f=tete2;
+            s=0;
+            for (j=1;j<=lc;j++){//begin for j
+                if (p->ligne==i && p->colonne==j && f->ligne==j){ // 00
+                    s=s+ p->val*f->val;
+                    p=p->next;
+                    f=f->next;
+                }// end 00
+                else if (p->ligne==i && p->colonne==j && f->ligne!=j)
+                    p=p->next;
+                else if ((p->ligne!=i || p->colonne!=j) && f->ligne==j)
+                    f=f->next;
 
-   }//end for j
-   printf("%d\t|",s);
-   printf("\n");
-   i++;
-   }//end big while
-   }
-   }
-   //**********************************
+            }//end for j
+            printf("%d\t|",s);
+            printf("\n");
+            i++;
+        }//end big while
+    }
+}
+//************************************
    else if (ch==2){
 
 
