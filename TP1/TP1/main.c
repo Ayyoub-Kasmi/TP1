@@ -94,7 +94,7 @@ int main()
     printf("si vous voulez repeter le programme entrer 1 sinon entrer 0 :  ");
     scanf("%d",&b);
   }while (b!=0);
-    printf(" \n Merci de votre participatoin (: \n");
+    printf(" \n Merci de votre participation (: \n");
 
     return 0;
 }

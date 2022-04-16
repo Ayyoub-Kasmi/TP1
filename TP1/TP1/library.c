@@ -41,43 +41,69 @@ void Lecture (Maillon_vecteur **tete,int li,int cl){
   }
   //****************************************************************************************************************************
   // Afficher matrice nulle
-  void affiche_M_nule(int a,int b){
-     int  k,h;
-     for (k=1;k<=a;k++){
+void affiche_M_nule(int a,int b){
+    int  k,h;
+    for (k=1;k<=a;k++){
         for (h=1;h<=b;h++){
             printf("0 | ");
         }
         printf("\n");
-     }
-   }
+    }
+}
+
+void afficher_ligne_null(int n, int m){
+//afficher n lignes de colonnes m
+
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=m; j++){
+            printf("0\t|");
+        }
+        printf("\n");
+    }
+}
 //*************************************************************************************************************
 //2)Affichage d'une matrice
 
-  void Afficher(Maillon_vecteur *tete,int l,int c){
-    Maillon_vecteur *z;
+void Afficher(Maillon_vecteur *tete,int l,int c){
+
+    Maillon_vecteur *z, *p;
     int i,j;
+
     if (tete==NULL){
-   printf(" \n La matrice est nulle ! \n");
-   affiche_M_nule(l,c);
-   free(tete);
-   }
-   else {
+        printf(" \n La matrice est nulle ! \n");
+        affiche_M_nule(l,c);
+
+    } else {
         z=tete;
-   for (i=1;i<=l;i++){
-        for (j=1;j<=c;j++){
-    if (z->ligne==i && z->colonne==j){
-    printf("%d\t|",z->val);
-    z=z->next;
+        for (i=1;i<=l;i++){
+            for (j=1;j<=c;j++){
+                if (z->ligne==i && z->colonne==j){
+                    printf("%d\t|",z->val);
+                    p=z;
+                    z=z->next;
+                    if(z==NULL){
+                        j=c+1;
+                        i=l+1;
+                        //c'est une methode pour arreter les deux boucles "pour"
+
+                        //afficher les 0 restantes dans la meme ligne, s'ils existent
+                        for(int tmp= p->colonne+1; tmp<=l; tmp++){
+                            printf("0\t|");
+                        }
+                    }
+                } else printf("0\t|");
+
+
+            } //fin pour j
+
+            printf("\n");
+        } //fin pour i
+
+        //afficher les lignes nulles restantes:
+        afficher_ligne_null(l-p->ligne, c);
     }
-    else printf("0\t|");
 
-
-    }
-    printf("\n");
-   }
-   }
-
-  }
+}
   //***********************************************************************************************************
   //3)Extraction d’une sous matrice
   void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd){
