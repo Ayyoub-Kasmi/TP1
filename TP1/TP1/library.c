@@ -106,106 +106,109 @@ void Afficher(Maillon_vecteur *tete,int l,int c){
 }
   //***********************************************************************************************************
   //3)Extraction d’une sous matrice
-  void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd){
-   int i,j;
-   Maillon_vecteur *p;
-   // 3)Extraction d’une sous matrice
+void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd){
+    int i,j;
+    Maillon_vecteur *p;
+    // 3)Extraction d’une sous matrice
     if (tete==NULL){
-       printf("l\'extraction est impossible car la matrice est nulle ! \n");
-    }
-    else { //begin else 1
-    p=tete;
-   if (jp>jd){ // petit if
-    printf("l\'extraction est impossible ! \n");
-   } // end petit if
-   else { // begin else 2
-   printf("L\'extraction de la sous matrice : \n");
-   for (i=1;i<=li;i++){ //begin for i
-    for (j=1;j<=cl;j++){ // begin for j
-      if (i>=ip && i<=id && j>=jp && j<=jd)  {// begin if 1
-       if (p->ligne==i && p->colonne==j){ // if a
-        printf("%d\t|",p->val);
-        } // end if a
-        else { // else b
-            printf("0\t|");
-        } // end else b
+        printf("l\'extraction est impossible car la matrice est nulle ! \n");
+    } else { //begin else 1
+        p=tete;
+        if (jp>jd){ // petit if
+            printf("l\'extraction est impossible ! \n");
+        } // end petit if
+        else { // begin else 2
+            printf("L\'extraction de la sous matrice : \n");
+            for (i=1;i<=li;i++){ //begin for i
+                for (j=1;j<=cl;j++){ // begin for j
+                    if (i>=ip && i<=id && j>=jp && j<=jd)  {// begin if 1
+                        if (p->ligne==i && p->colonne==j){ // if a
+                            printf("%d\t|",p->val);
+                        } // end if a
+                        else { // else b
+                            printf("0\t|");
+                        } // end else b
 
-      } // end if 1
+                    } // end if 1
 
-       if (i==id && j==jd){  // begin if 2
-      break;
-      }  // end if 2
+                    if (i==id && j==jd){  // begin if 2
+                        break;
+                    }  // end if 2
 
-       if (p->ligne==i && p->colonne==j){ // if b
-      p=p->next;
-      } // end if b
-    }// end for j
-    printf("\n");
-    if (i==id && j==jd)
-        break;
-   } // end for i
-     } // end else 2
-       } // end else 1
-       }
+                    if (p->ligne==i && p->colonne==j){ // if b
+                        p=p->next;
+                    } // end if b
+                }// end for j
+                printf("\n");
+                if (i==id && j==jd)
+                    break;
+            } // end for i
+        } // end else 2
+    } // end else 1
+}
 //**************************************************************************************************************
-    void Diviser(Maillon_vecteur *tete,int li,int cl,int n,int m){
-      int ip,jp,id,jd,x,y,k=1;
-      x=li/n;
-      y=cl/n;
-      ip=1;
-      id=x;
-      if (tete==NULL){ // if 1
+
+void Diviser(Maillon_vecteur *tete,int li,int cl,int n,int m){
+    int ip,jp,id,jd,x,y,k=1;
+    x=li/n;
+    y=cl/n;
+    ip=1;
+    id=x;
+    if (tete==NULL){ // if 1
         printf("La division est impossible ! \n");
-      } // end if 1
-      else { //else 1
-       if (li%n!=0 && cl%m!=0){// if 2
-        printf("La division est impossible ! \n");
-       }//end if 2
-       else {//else 2
-        while (id<=li){// begin while 1
-             jp=1;
-             jd=y;
-            while (jd<=cl){ // begin while 2
-             printf("Sous_matrice nemuro %d : \n ",k);
-             Extract(tete,li,cl,ip,jp,id,jd);
-             printf("\n");
-             jp+=y;
-             jd+=y;
-             k++;
-          }//end while 2
-          ip+=x;
-          id+=x;
-        }// end while 1
-       }// end else 2
-      }// else 2
-    }//end function
+    } // end if 1
+    else { //else 1
+        if (li%n!=0 && cl%m!=0){// if 2
+            printf("La division est impossible ! \n");
+        }//end if 2
+        else {//else 2
+            while (id<=li){// begin while 1
+                jp=1;
+                jd=y;
+                while (jd<=cl){ // begin while 2
+                    printf("Sous_matrice nemuro %d : \n ",k);
+                    Extract(tete,li,cl,ip,jp,id,jd);
+                    printf("\n");
+                    jp+=y;
+                    jd+=y;
+                    k++;
+                }//end while 2
+                ip+=x;
+                id+=x;
+            }// end while 1
+        }// end else 2
+    }// else 2
+}//end function
+
   //*********************************************************************************************************
    //8)operations logiques
-  void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl){
-   Maillon_vecteur *p,*f;
-   int i,j,s;
+void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl){
+    Maillon_vecteur *p,*f;
+    int i,j,s;
+
     printf("*************** NON : 1 *************** \n");
     printf("**************** ET : 2 *************** \n");
     printf("**************** OU : 3 *************** \n");
     printf("*************** OUX : 4 *************** \n");
+
     printf("Donner votre choix : \n");
     scanf("%d",&s);
     switch (s){//begin switch
     case 1: // begin case 1
         if (tete1==NULL){//if0
-          printf("La matrice est NULL");
-          affiche_M_nule(li,cl);
+            printf("La matrice est NULL");
+            affiche_M_nule(li,cl);
         }//end if0
         else {//begin else 0
         p=tete1;
         printf("La Matrice NON de la premiere matrice  : \n");
-      for (i=1;i<=li;i++){//begin for i
-        for (j=1;j<=cl;j++){//begin for j
-         if (p->ligne==i && p->colonne==j){// begin if 1
-    printf("%d\t|",~p->val);
-    p=p->next;
-    }//end if 1
-    else printf("0\t|");
+        for (i=1;i<=li;i++){//begin for i
+            for (j=1;j<=cl;j++){//begin for j
+                if (p->ligne==i && p->colonne==j){// begin if 1
+                printf("%d\t|",~p->val);
+                p=p->next;
+            }//end if 1
+            else printf("0\t|");
         }//end for j
         printf("\n");
       }// end for i
