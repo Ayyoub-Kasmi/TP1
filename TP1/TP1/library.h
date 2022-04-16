@@ -1,25 +1,20 @@
 #ifndef LIBRARY_H_INCLUDED
 #define LIBRARY_H_INCLUDED
+typedef struct Maillon_vecteur{
 
-//For the first presentation
-typedef struct Node1 {
-    int val;
-    int row;
-    int col;
-    struct Node1* next;
-} Node1;
+      int val;
+      int ligne;
+      int colonne;
+      struct Maillon_vecteur *next;
+    }Maillon_vecteur;
+void Lecture (Maillon_vecteur **tete,int li,int cl);
+void Afficher(Maillon_vecteur *tete,int l,int c);
+void Extract(Maillon_vecteur *tete,int li,int cl,int ip,int jp,int id,int jd);
+void Diviser(Maillon_vecteur *tete,int li,int cl,int n,int m);
+void operations_logiques(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li,int cl);
+void transposer(Maillon_vecteur *tete,int li,int cl);
+void multiplication(Maillon_vecteur *tete1,Maillon_vecteur *tete2,int li1,int lc,int ch);
 
-//For the second presentation
-typedef struct Line{
-    int number; //line number
-    struct Node2* first; //first element in the line
-    struct Line* next; //to move to the next line
-} Line;
-
-typedef struct Node2* {
-    int val;
-    int col;
-    struct Node2* next;
-} Node2;
 
 #endif // LIBRARY_H_INCLUDED
+
