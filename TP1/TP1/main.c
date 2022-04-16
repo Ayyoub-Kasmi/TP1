@@ -17,7 +17,7 @@
 int main()
 {
 
-  Maillon_vecteur *head,*ras;
+  Maillon_vecteur *head,*ras,*v;
   int li,cl,ip,jp,id,jd,n,m,choix,b,ch;
 
   do{
@@ -34,7 +34,16 @@ int main()
    printf("Donner le nombre de colonnes : ");
    scanf("%d",&cl);
    /*1)*/ Lecture(&head,li,cl); // la lecture c'est pas un choix car elle est obligatoire !
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+   Afficher(head,li,cl);
 
+=======
+          Afficher(head,li,cl);
+>>>>>>> Stashed changes
+=======
+          Afficher(head,li,cl);
+>>>>>>> Stashed changes
    printf("Donner votre choix : ");
    scanf("%d",&choix);
  switch (choix){
@@ -68,7 +77,8 @@ int main()
      operations_logiques(head,ras,li,cl);
      break;
  //***********************************************************************************************
-     case 7 : transposer(head,li,cl);
+    case 7 : transposer2(&v,head,li,cl);
+             Afficher(v,li,cl);
               break;
  //***********************************************************************************************
      case 6 :

@@ -11,15 +11,25 @@
 
 1647788816 d:\esi\semËstre 2\programation avec c\tp 1\library.h
 
-1649454019 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\main.c
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+1650065512 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\main.c
+=======
+1649629574 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\main.c
+>>>>>>> Stashed changes
+=======
+1649629574 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\main.c
+>>>>>>> Stashed changes
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	"library.h"
 
-1649454002 c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.h
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+1650065192 c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.h
 
-1649454019 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.c
+1650065465 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -33,7 +43,21 @@
 
 1650063101 c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.h
 
+<<<<<<< HEAD
+1650061625 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.c
+=======
+1649629457 c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.h
+
+1649629659 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.c
+>>>>>>> Stashed changes
+=======
+1649629457 c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.h
+
+1649629659 source:c:\users\al-athir computer\documents\github\tp1\tp1\tp1\library.c
+>>>>>>> Stashed changes
+=======
 1650066402 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.c
+>>>>>>> 043c3cd5f9fff3826743e4f179ed358185f67032
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
