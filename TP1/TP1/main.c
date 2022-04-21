@@ -25,12 +25,10 @@ int main()
     //Task2
     showMatrix(matrix1, m1, n1);
 
-    printf("Trial: \n\n\n");
-	printf("Here is the value: %d\n\n\n", strcmp("helloe", "helloe"));
     //Task3
-/*
-    int L1, C1, L2, C2; //the indexes of the starting and ending cells
 
+    int L1, C1, L2, C2; //the indexes of the starting and ending cells
+/*
     printf("Enter the coordinates of the starting cell (line, column): ");
     fscanf(file, "%d %d", &L1, &C1);
     printf("Enter the coordinates of the ending cell (line, column): ");
@@ -49,16 +47,9 @@ int main()
     divideMatrix(matrix1, m1, n1, m2, n2); //m1 and n1 are the size of the original matrix, m2 and n2 are the size of the sub matrix
 */
     //Task5
-
-    printf("\n\nThis is matrix2\n\n");
-    createMatrix(file, &matrix2, m1, n1); //the 2nd matrix must have the same size as matrix1
-    showMatrix(matrix2, m1, n1);
-    //printf("\nThis is the sum: \n");
-    //sumMatrices(file, matrix1, m1, n1); //this function will modify the matrix
-    //consider creating a "deleteMatrix" function to delete matrix2 after each sum and then create a new one inside the sumMatrix
-    //function and read values from it
-
-
+/*
+    sumMatrices(file, matrix1, m1, n1); //this function will modify the matrix
+/*
     //Task6
 /*
     printf("\n\nThis is matrix2\n\n");
@@ -76,7 +67,12 @@ int main()
 */
     //Task8
 
+    printf("\n\nThis is matrix2\n\n");
+    createMatrix(file, &matrix2, m2, n2); //this is the vector
+    showMatrix(matrix2, m2, n2);
     logicalOperationMatrix(matrix1, matrix2, m1, n1);
+
+
     fclose(file);
     return 0;
 }

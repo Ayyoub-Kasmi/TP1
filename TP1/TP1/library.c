@@ -3,10 +3,95 @@
 #include <math.h>
 #include "library.h"
 
-//abstract machine
-//counter for nodes
+//To be completed:
+//1-abstract machine
+//2-counter for nodes
+//3-decoration
 
-//Auxiliary functions:
+
+//************************************  ABSTRACT MACHINE ************************************************************//
+//*******************************************************************************************************************//
+
+// CREATE - DELETE :
+void allocateLine(Line** line){
+    *line = (Line* )malloc(sizeof(Line));
+}
+
+void allocateColumn(Node2** column){
+    *column = (Node2* )malloc(sizeof(Node2));
+}
+
+void freeLine(Line* line){
+    free(line);
+}
+
+void freeColumn(Node2* column){
+    free(column);
+}
+
+// UPDATE :
+
+    // Line node:
+
+void affectLineNumber(Line* line, int number){
+    line->number = number;
+}
+
+void affectAddressLineLine(Line* line1, Line* line2){
+    line1->next = line2;
+}
+
+void affectAddressLineColumn(Line* line, Node2* column){
+    line->first = column;
+}
+
+    // Column node:
+
+void affectColumnNumber(Node2* column, int number){
+    column->col = number;
+}
+
+void affectAddressColumn(Node2* column1, Node2* column2){
+    column1->next = column2;
+}
+
+void affectValue(Node2* column, int value){
+    column->val = value;
+}
+
+// ACCESS:
+
+    // Line node :
+int lineNumber(Line* line){
+    return line->number;
+}
+
+Line* nextLine(Line* line){
+    return line->next;
+}
+
+Node2* firstColumn(Line* line){
+    return line->first;
+}
+
+    // Column node:
+int columnNumber(Node2* column){
+    return column->col;
+}
+
+int columnValue(Node2* column){
+    return column->val;
+}
+
+Node2* nextColumn(Node2* column){
+    return column->next;
+}
+
+
+//******************************************* AUXILARY FUNCTIONS ****************************************************//
+//*******************************************************************************************************************//
+
+                        //These are helping functions that will be used in the program's main functions
 
 void createLineNode(Line** node, int i){
     *node=(Line* )malloc(sizeof(Line));
@@ -124,9 +209,9 @@ void removeNullLines(Line **matrix){
     }
 }
 
-void removeColumnNode(Line* matrix, int line, int column){
+void removeColumnNode(Line** matrix, int line, int column){
     //the node is supposed already existent in the matrix
-    Line *P=matrix, *P2;
+    Line *P=(*matrix), *P2;
     Node2 *Q, *previous;
 
     while(P->number != line){
@@ -147,13 +232,19 @@ void removeColumnNode(Line* matrix, int line, int column){
     } else {
         previous->next = Q->next;
     }
+    free(Q);
     //what if the node is in the last line
     //to fix later
-    if(P->next==NULL){
-        P2->next=NULL;
+
+    if(P->first == NULL){
+        if(P == *matrix){
+            *matrix = P->next;
+
+        } else {
+            P2->next = P->next;
+        }
         free(P);
     }
-    free(Q);
 }
 
 void deleteMatrix(Line **matrix){
@@ -374,7 +465,7 @@ void extractMatrix(Line* matrix, int L1, int C1, int L2, int C2){
     */
 
     //if every single line is already null
-    if(matrix->number>L2){
+    if(matrix==NULL){
         printNullLines(L2-L1+1, C2-C1+1);
         return; //to stop the function from continuing to the rest of the code
     }
@@ -505,11 +596,12 @@ void sumMatrices(FILE *file, Line* matrix1, int m, int n){
     Node2 *Q1, *Q2, *tmp;
 
     int counter;
-    printf("How many matrices to sum?: ");
+    printf("\nHow many matrices to add?: ");
     scanf("%d", &counter);
     printf("This is the counter: %d\n\n", counter);
     counter=3;
     for(int i=0; i<counter; i++){
+        printf("Creating matrix %d: \n", i+2);
         createMatrix(file, &matrix2, m, n);
         printf("\n\nThis is matrix %d: \n\n", i+2);
         showMatrix(matrix2, m, n);
@@ -554,6 +646,7 @@ void sumMatrices(FILE *file, Line* matrix1, int m, int n){
         deleteMatrix(&matrix2);
     }
 
+    printf("\nThis is the final result of the sum: \n");
     showMatrix(matrix1, m, n);
 }
 
@@ -631,12 +724,13 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
     tmp=1;
     do{
         min=tmp; //we start with min=1
+        tmp=n2;
         P2=matrix2;
+        found=0; //boolean variable
         while(P2!=NULL){ //looking for non null columns in each line
             Q2=P2->first;
-            found=0; //boolean variable
-            tmp=n2;
 
+            //printf("This is min: %d\n", min);
             while(Q2!=NULL){
 
                 if(Q2->col == min){ //non null column found!
@@ -646,7 +740,7 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
                 if(Q2->col > min && Q2->col <= tmp){
                     tmp=Q2->col; //updating tmp with a value that is directly greater than "min" but less than the previous value,
                                  //which will give us the value of the next min!
-
+                    //printf("This is tmp: %d\n", tmp);
                 }
                 Q2=Q2->next;
             }
@@ -658,7 +752,6 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
             nonNullColumns[i]=min;
             i++;
         }
-
     }while(min!=tmp); //min and tmp can only be equal didn't change during the iteration, which means that we reached the last column
 
     size=i; //the size of the vector nonNULLColumns
@@ -671,6 +764,7 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
 
     for(i=0; i<size; i++){
         P1=matrix1;
+        int k=1; //to delete
 
         while(P1!=NULL){
             value=0;
@@ -680,6 +774,7 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
             while(P2!=NULL){
                 if(nodeExists(matrix2, P2->number, nonNullColumns[i], &Q1)){
                     if(nodeExists(matrix1, P1->number, P2->number, &Q2)){
+                        //if(Q1->col == 3 && Q2->col == 2) printf("The product of %d and %d is: %d\n", Q1->val, Q2->val, Q1->val * Q2->val);
                         value+=Q1->val * Q2->val;
                     }
                 }
@@ -695,8 +790,11 @@ void multiplyMatrixMatrix(Line *matrix1, Line* matrix2, int m1, int n1, int m2, 
 
                 createColumnNode(&tmpC, value, nonNullColumns[i]);
                 insertColumnNode(result, P1->number, tmpC);
+
+                //if(k== 2) printf("This is value: %d\n", value);
             }
 
+            k++; //to delete, k represents the i-nth line of matrix1
             P1=P1->next;
         }
 
@@ -813,6 +911,79 @@ void logicalOperation(Line* matrix, int value, int line, int column, int oper){
     }
 }
 
+void printOnes(int number){
+    for(int i=1; i<number; i++){
+        printf("%3d ",1);
+    }
+}
+
+void printLinesOfOnes(int number, int columns){ //Used to print the NULL lines
+    for(int i=0; i<number; i++){
+        for(int j=0; j<columns; j++){
+            printf("%3d ", 1);
+        }
+        printf("\n");
+    }
+}
+
+void negateMatrix(Line* matrix, int lines, int columns){
+    //you might consider checking if matrix is null, if yes then you will only print null lines
+    Line *P;
+    Node2 *cell;
+    int dif; //to calculate difference between two lines or columns: dif1 for lines, dif2 for columns
+    printf("\n"); //Auxiliary line jump
+
+    if(matrix == NULL){
+        printLinesOfOnes(lines, columns);
+        return; //stopping the function from executing the next piece of code
+    }
+
+    //check if there're null line before the first line
+    if(matrix->number!=1){
+        printLinesOfOnes(matrix->number -1 ,columns);
+    }
+
+    while(matrix!=NULL){
+        cell=matrix->first; //Head of the line
+
+        //check if there're zeros before the line's head
+        if(cell->col!=1){
+            printOnes(cell->col);
+        }
+        //printing the zeros in the middle of the line
+        while(cell->next!=NULL){ //The problem is with the size, so do we always need a size variable
+            printf("%3d ", 0);
+            dif=(cell->next->col) - cell->col;
+            if(dif!=1){
+                printOnes(dif);
+            }
+            cell=cell->next;
+        }
+        printf("%3d ",0); //printing the last element
+
+        //checking if there're zeros after the last element
+        if(cell->col!=columns){
+            printOnes(columns - cell->col +1);
+        }
+        printf("\n");
+
+        //checking the null lines in the middle
+        if(matrix->next!=NULL){
+            dif=(matrix->next->number)-matrix->number;
+            if(dif!=1){
+                printLinesOfOnes(dif-1, columns);
+            }
+        }
+        P=matrix; //saving the old value of matrix in P
+        matrix=matrix->next;
+    }
+
+    //checking if there're null lines in the end
+    if(P->number!=lines){
+            printLinesOfOnes(lines - P->number, columns);
+        }
+}
+
 void logicalOperationMatrix(Line* matrix1, Line* matrix2, int m, int n){
     //the approach will be in this way:
     //I have matrix1, I get matrix 2. I will pick the nodes from matrix2 line by line and then, from their coordinates, I will
@@ -824,15 +995,23 @@ void logicalOperationMatrix(Line* matrix1, Line* matrix2, int m, int n){
                 //if the sum is a zero then we should remove the node
 
     Line *P1, *P2=matrix2;
-    Node2 *Q1, *Q2, *tmp;
+    Node2 *Q1, *Q2, *tmp, *tmp2;
 
     int oper; //the operator of the logical operation will be referenced to by a number
-    printf("Choose the logical operation(Enter the number corresponding to the operation): \n");
+    printf("\nChoose the logical operation(Enter the number corresponding to the operation): \n");
     printf("1: NEGATION \n 2: AND \n 3: OR \n 4: XOR\n");
     printf("Operation: ");
     scanf("%d", &oper);
 
     switch(oper){
+
+    case 1:
+        //The idea here is simple: I will use exactly the showMatrix function but in a reversed way: I print 0 if the node
+        //exists, and 1 if the node does not exist
+
+        printf("This is the negated matrix: \n");
+        negateMatrix(matrix1, m, n);
+        break;
 
     case 2:
         //the reason of separating this case from the other cases is because I will go through the nodes of matrix1 and not
@@ -844,13 +1023,14 @@ void logicalOperationMatrix(Line* matrix1, Line* matrix2, int m, int n){
 
             while(Q1!=NULL){
                 tmp=Q1; //I will use it to avoid problems after deleting a node
+
                 Q1=Q1->next;
-                if(nodeExists(matrix2, P1->number, tmp->col, &tmp)){
+                if(nodeExists(matrix2, P1->number, tmp->col, &tmp2)){
+
                     logicalOperation(matrix1, tmp->val, P1->number, tmp->col, 2);
 
                 } else {
-
-                    removeColumnNode(matrix1, P1->number, tmp->col);
+                    removeColumnNode(&matrix1, P1->number, tmp->col);
 
                 }
 
@@ -861,7 +1041,7 @@ void logicalOperationMatrix(Line* matrix1, Line* matrix2, int m, int n){
 
         break;
 
-    default:
+    default: //case 3 and 4
         while(P2!=NULL){
             Q2=P2->first;
 
