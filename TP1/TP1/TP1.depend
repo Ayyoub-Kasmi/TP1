@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1650550683 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\main.c
+1650768892 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\main.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
 	"library.h"
 
-1650492331 c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.h
+1650768364 c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.h
 
-1650555118 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.c
+1650768401 source:c:\users\ayyoubkasmi\documents\github\tp1\tp1\tp1\library.c
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
